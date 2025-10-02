@@ -126,7 +126,7 @@ RUN ARCH="${TARGETARCH}" && \
     wget -O .config "$CONFIG_URL"
 
 # Build toolchain + sysroot (use all available cores)
-RUN ct-ng build.$(nproc)
+RUN unset CT_LOG_PROGRESS_BAR && ct-ng build.$(nproc)
 
 USER root
 
