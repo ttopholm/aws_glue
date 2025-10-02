@@ -220,6 +220,14 @@ RUN mkdir /vscode \
 
 RUN chmod 777 /tmp/spark-events
 
+# Disable any slf4j-reload4j jars (Log4j1 binding) - force the log4j2 binding
+RUN for JAR in /home/glue_user/spark/jars/slf4j-reload4j-*.jar /home/glue_user/aws-glue-libs/jars/slf4j-reload4j-*.jar; do \
+        if [ -f "$JAR" ]; then \
+            mv "$JAR" "$JAR.disabled"; \
+            echo "Disabled $JAR"; \
+        fi; \
+    done
+
 COPY fix-vscode-permissions.sh /
 RUN chmod +x /fix-vscode-permissions.sh
 
